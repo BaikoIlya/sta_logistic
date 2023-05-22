@@ -1,9 +1,9 @@
 import json
+import os
+import pika
 import time
 from datetime import datetime
 from pathlib import Path
-
-import pika, sys, os
 
 
 def main():
@@ -37,7 +37,8 @@ def main():
         all_text = ''
         files_list = json.loads(body)
         delivery_tag = method.delivery_tag
-        print(f'Получен список файлов: {files_list} \nИдентификатор сообщения: {delivery_tag}')
+        print(f'Получен список файлов: {files_list}'
+              f'\nИдентификатор сообщения: {delivery_tag}')
         if files_list:
             for txt_file in files_list:
                 if txt_file not in delete_files:
@@ -67,7 +68,3 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         print('Interrupted')
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
